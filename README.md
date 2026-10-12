@@ -21,6 +21,8 @@ npm run build
 
 The production output is `dist/`. Browser smoke coverage is in `tests/browser.py`; with Python Playwright and Chromium installed, run `python tests/browser.py` while the development server is running. `CROSSR_TEST_URL` and `CHROMIUM_PATH` override its defaults.
 
+Production assets receive a shared content version in their URLs, including the puzzle module import. This prevents a refreshed page from reusing incompatible scripts from an earlier deployment. After building, `python tests/cache.py` verifies an actual cached-script upgrade on desktop and phone, including retained puzzle progress.
+
 ## First version
 
 - Grid entry with mouse, keyboard, and an on-screen touch keyboard.
