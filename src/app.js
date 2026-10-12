@@ -192,9 +192,7 @@ $('#timer').addEventListener('click', () => setPaused(!paused)); $('#resume').ad
 $('#pencil').addEventListener('click', () => { pencilMode = !pencilMode; $('#pencil').setAttribute('aria-pressed', String(pencilMode)); $('#game-menu').open = false; toast(pencilMode ? 'Pencil mode on.' : 'Pencil mode off.'); if (!paused) cellNodes[state.selected].focus({preventScroll:true}); });
 $('#open-help').addEventListener('click', () => $('#help-dialog').showModal());
 $('#open-library').addEventListener('click', openLibrary); $('#next-puzzle').addEventListener('click', openLibrary);
-$('#browse-library').addEventListener('click', openLibrary);
 $('#menu-library').addEventListener('click', () => { $('#game-menu').open = false; openLibrary(); });
-document.querySelectorAll('[data-puzzle]').forEach(button => button.addEventListener('click', () => { loadPuzzle(button.dataset.puzzle); cellNodes[state.selected].focus({preventScroll:true}); }));
 document.querySelectorAll('.dialog-done').forEach(button => button.addEventListener('click', () => button.closest('dialog').close()));
 document.querySelectorAll('.dialog-close').forEach(button => button.addEventListener('click', () => button.closest('dialog').close()));
 $('#reset').addEventListener('click', () => { $('#game-menu').open = false; confirm('Restart this puzzle?', 'This clears the letters and timer for this puzzle. Your other puzzles will stay saved.', 'Restart puzzle', () => { state = restoreProgress(puzzle, null); wrong.clear(); completed = false; paused = false; userInteracted = false; render(); persist(); cellNodes[state.selected].focus({preventScroll:true}); }); });

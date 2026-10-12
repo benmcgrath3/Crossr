@@ -20,10 +20,9 @@ main { max-width: 1600px; margin: auto; padding: 14px 44px 0; }
   line-height: 1.15; letter-spacing: -1.7px; margin: 0;
 }
 .back-link { display: flex; justify-content: flex-end; margin: 8px 0 26px; }
-.back-link button, .other-crosswords button { color: var(--blue); padding: 0; text-align: left; }
-.back-link button:hover, .other-crosswords button:hover { text-decoration: underline; }
+.back-link button { color: var(--blue); padding: 0; text-align: left; }
+.back-link button:hover { text-decoration: underline; }
 .back-link button { font-size: clamp(17px,1.85vw,30px); }
-.other-crosswords { font-size: clamp(18px,1.85vw,30px); line-height: 1.5; margin: 0 0 44px; }
 .toolbar {
   border: 1px solid var(--border); display: flex; justify-content: space-between;
   align-items: center; height: 90px; padding: 0 39px; gap: 24px;
@@ -138,7 +137,6 @@ dialog p { font-size: 16px; line-height: 1.5; color: #555; }
 @media (min-width:1600px) {
   .toolbar { height: 101px; }
   .message-banner { min-height: 105px; }
-  .other-crosswords { margin-bottom: 48px; }
   .back-link { margin-top: 6px; margin-bottom: 26px; }
 }
 @media (max-width:1100px) {
@@ -162,7 +160,6 @@ dialog p { font-size: 16px; line-height: 1.5; color: #555; }
   .page-heading h1 { font-size: 42px; letter-spacing: -1px; }
   .back-link { margin: 12px 0 22px; }
   .back-link button { font-size: 17px; }
-  .other-crosswords { font-size: 17px; line-height: 1.5; margin-bottom: 24px; }
   .toolbar { padding: 0 17px; height: 68px; gap: 10px; font-size: 16px; }
   .toolbar-left { gap: 19px; }
   .toolbar-right { gap: 19px; }
@@ -196,7 +193,6 @@ dialog p { font-size: 16px; line-height: 1.5; color: #555; }
   .toolbar-right { gap: 12px; }
   .game-menu summary svg { width: 24px; height: 24px; }
   .back-link button { font-size: 15px; }
-  .other-crosswords { font-size: 16px; }
   .message-banner { font-size: 18px; padding: 16px 18px; min-height: 76px; }
   .letter { font-size: clamp(17px,5vw,22px); margin-top: 6px; }
   .cell-number { font-size: 9px; top: 1px; }
@@ -219,7 +215,7 @@ dialog p { font-size: 16px; line-height: 1.5; color: #555; }
   @page { margin: 12mm; }
   main { padding: 0; max-width: none; }
   .page-heading h1 { font-size: 32px; }
-  .back-link, .other-crosswords, .toolbar, .message-banner, .touch-keyboard, .grid-footer,
+  .back-link, .toolbar, .message-banner, .touch-keyboard, .grid-footer,
   .keyboard-hint, footer, dialog, .toast, .completion, #pause-overlay { display: none !important; }
   .play-area { display: grid; grid-template-columns: 55% 1fr; gap: 18px; margin-top: 15px; }
   .clue-panel { max-height: none; overflow: visible; gap: 15px; }

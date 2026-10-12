@@ -201,7 +201,8 @@ with sync_playwright() as p:
     old_page = legacy.new_page()
     old_page.goto(BASE_URL)
     assert old_page.locator('.cell').count() == 121
-    old_page.locator('[data-puzzle="heart-of-the-matter"]').click()
+    old_page.locator('#open-library').click()
+    old_page.locator('.library-puzzle').nth(1).click()
     assert old_page.locator('.cell').nth(0).locator('.letter').inner_text() == 'H'
     print('PASS migration: upgraded default puzzle, preserved old progress')
     assert not errors, json.dumps(errors)
