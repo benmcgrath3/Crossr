@@ -1,0 +1,14 @@
+{
+  "name": "crossr",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/server.mjs",
+    "start": "node scripts/server.mjs",
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "check": "node --check src/app.js && node --check src/crossword.js && node --check scripts/server.mjs"
+  },
+  "engines": { "node": ">=22" }
+}

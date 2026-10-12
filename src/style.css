@@ -1,0 +1,239 @@
+:root {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #222; background: #fff; font-synthesis: none;
+  --blue: #127db4; --banner: #b8d4fa; --active: #dceafd;
+  --selected: #ffe49b; --border: #d0d0d0;
+}
+* { box-sizing: border-box; }
+body { margin: 0; }
+button, summary, input { font: inherit; }
+button, summary { cursor: pointer; }
+button { color: inherit; border: 0; background: none; }
+a { color: var(--blue); }
+button:focus-visible, a:focus-visible, summary:focus-visible, input:focus-visible {
+  outline: 3px solid #1478b3; outline-offset: 3px;
+}
+[hidden] { display: none !important; }
+main { max-width: 1600px; margin: auto; padding: 14px 44px 0; }
+.page-heading h1 {
+  font-size: clamp(40px,4.45vw,72px); font-weight: 750;
+  line-height: 1.15; letter-spacing: -1.7px; margin: 0;
+}
+.back-link { display: flex; justify-content: flex-end; margin: 8px 0 26px; }
+.back-link button, .other-crosswords button { color: var(--blue); padding: 0; text-align: left; }
+.back-link button:hover, .other-crosswords button:hover { text-decoration: underline; }
+.back-link button { font-size: clamp(17px,1.85vw,30px); }
+.other-crosswords { font-size: clamp(18px,1.85vw,30px); line-height: 1.5; margin: 0 0 44px; }
+.toolbar {
+  border: 1px solid var(--border); display: flex; justify-content: space-between;
+  align-items: center; height: 90px; padding: 0 39px; gap: 24px;
+  font-size: clamp(18px,1.65vw,27px);
+}
+.toolbar-left, .toolbar-right { display: flex; align-items: center; }
+.toolbar-left { gap: 52px; }
+.toolbar-right { gap: 42px; }
+.toolbar-right button { padding: 10px 2px; }
+.toolbar-right button:hover { color: var(--blue); }
+.game-menu { position: relative; }
+.game-menu summary { list-style: none; display: flex; padding: 4px; }
+.game-menu summary::-webkit-details-marker { display: none; }
+.game-menu summary svg { width: 32px; height: 32px; fill: none; stroke: #222; stroke-width: 2; stroke-linecap: round; }
+.menu-items {
+  position: absolute; top: 52px; left: -20px; width: 230px; z-index: 10;
+  border: 1px solid #ccc; background: #fff; padding: 7px;
+  box-shadow: 0 5px 16px #0002; font-size: 16px;
+}
+.menu-items button { display: block; width: 100%; padding: 9px 13px; text-align: left; }
+.menu-items button:hover { background: #e6f0ff; }
+.menu-label { font-size: 12px; font-weight: bold; text-transform: uppercase; color: #777; border-top: 1px solid #ddd; padding: 12px 13px 4px; margin-top: 5px; }
+.menu-tick { float: right; visibility: hidden; }
+#pencil[aria-pressed=true] .menu-tick { visibility: visible; }
+.restart-menu { border-top: 1px solid #ddd; margin-top: 6px; }
+#timer { display: flex; align-items: center; gap: 12px; min-width: 83px; padding: 8px 0; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.timer-symbol { display: none; font-size: 14px; }
+#timer:hover .timer-symbol, #timer:focus-visible .timer-symbol { display: inline; }
+.share-button { display: flex; padding: 4px; }
+.share-button svg { fill: none; stroke: #111; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; width: 39px; height: 39px; }
+.message-banner { background: var(--banner); min-height: 94px; display: flex; align-items: center; padding: 22px 42px; font-size: clamp(19px,1.85vw,30px); color: #080808; }
+.clue-indicator { font-weight: 700; white-space: nowrap; margin-right: 13px; }
+#current-clue { line-height: 1.45; }
+.play-area { display: grid; grid-template-columns: minmax(0,58%) minmax(0,1fr); gap: 16px; padding: 16px 10px 0; }
+.grid-column { min-width: 0; }
+.board-wrap { position: relative; width: 100%; max-width: 900px; margin: auto; }
+.grid {
+  display: grid; grid-template-columns: repeat(var(--size),minmax(0,1fr));
+  grid-template-rows: repeat(var(--size),minmax(0,1fr)); gap: 1px;
+  border: 1px solid #555; background: #555; aspect-ratio: 1; width: 100%;
+}
+.cell { background: #fff; min-width: 0; min-height: 0; padding: 0; position: relative; border-radius: 0; display: flex; align-items: center; justify-content: center; touch-action: manipulation; }
+.cell.black { background: #303030; }
+.cell.in-word { background: var(--active); }
+.cell.selected { background: var(--selected); }
+.cell-number { position: absolute; top: 2px; left: 3px; font-size: clamp(9px,1.17vw,19px); line-height: 1; color: #222; }
+.letter { font-size: clamp(24px,2.9vw,47px); line-height: 1; font-weight: 400; margin-top: 8px; }
+.cell.penciled .letter { color: #888; font-style: italic; }
+.cell.wrong .letter { color: #c33; }
+.cell.wrong:after { content: ''; position: absolute; background: #c33; height: 2px; left: 15%; right: 15%; top: 60%; transform: rotate(-40deg); }
+.cell.revealed:after { content: ''; position: absolute; right: 3px; bottom: 3px; width: 4px; height: 4px; background: #1580b8; border-radius: 50%; }
+.cell:focus-visible { outline: 2px solid #1773b1; outline-offset: -3px; z-index: 1; }
+.puzzle-credit { font-size: clamp(15px,1.65vw,26px); line-height: 1.35; text-align: center; margin: 12px 0 16px; }
+.player-credit { display: block; margin-top: 3px; }
+.player-credit a { color: inherit; text-underline-offset: 3px; }
+.grid-footer { display: flex; justify-content: space-between; gap: 8px; font-size: 12px; color: #777; margin: 14px 0; }
+.keyboard-hint { text-align: center; color: #777; font-size: 12px; line-height: 1.6; margin: 12px 0 18px; }
+kbd { font-family: inherit; font-size: 11px; background: #f3f3f3; border: 1px solid #ddd; padding: 1px 4px; border-radius: 2px; }
+.clue-panel { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 22px; min-width: 0; max-height: calc(var(--board-height,800px) + 80px); overflow: hidden; }
+.clue-panel > section { display: flex; flex-direction: column; min-height: 0; min-width: 0; }
+.clue-panel h2 { font-size: clamp(20px,1.68vw,28px); line-height: 1.2; margin: 0 0 9px; font-weight: bold; padding: 1px 8px 10px; }
+.clue-panel h2:after { content: ''; display: block; width: 110px; max-width: 100%; height: 1px; background: #ddd; margin-top: 9px; }
+.clue-list { overflow-y: auto; overscroll-behavior: contain; list-style: none; padding: 0 7px 16px 0; margin: 0; scrollbar-width: thin; scrollbar-color: #d1d1d1 transparent; }
+.clue-list li { margin-bottom: 3px; }
+.clue-button { display: flex; align-items: baseline; gap: 7px; text-align: left; font-size: clamp(17px,1.5vw,25px); line-height: 1.45; padding: 5px 9px; width: 100%; color: #757575; border-radius: 0; }
+.clue-number { min-width: 27px; text-align: right; font-weight: bold; }
+.clue-button:hover { background: #f0f4fb; }
+.clue-button.active { background: var(--active); color: #111; }
+.clue-button.crossing { box-shadow: inset 3px 0 #99b7df; }
+.clue-button.finished { color: #757575; }
+.clue-button.finished.active { color: #222; }
+body.large-clues .clue-button { font-size: clamp(19px,1.75vw,28px); }
+.completion { display: flex; align-items: center; justify-content: space-between; gap: 18px; border-top: 1px solid #ddd; padding: 22px 16px; background: #edf5ff; }
+.completion h2 { margin: 0 0 7px; font-size: 23px; }
+.completion p { margin: 0; font-size: 15px; color: #555; }
+footer { border-top: 1px solid #ccc; padding: 15px 0; color: #777; font-size: 12px; margin-top: 25px; }
+.primary-button { background: #087eba; color: #fff; border: 1px solid #087eba; border-radius: 3px; padding: 11px 20px; font-size: 16px; }
+.primary-button:hover { background: #006697; }
+.secondary-button { border: 1px solid #aaa; border-radius: 3px; padding: 11px 18px; font-size: 16px; }
+#pause-overlay { position: absolute; inset: 0; background: #f6f9fff5; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 15px; border: 1px solid #555; }
+#pause-overlay > svg { fill: none; stroke: #147eba; stroke-width: 4; width: 48px; height: 48px; }
+#pause-overlay h2 { font-size: 28px; margin: 16px 0 0; }
+#pause-overlay p { color: #666; font-size: 16px; margin-bottom: 25px; }
+.toast { position: fixed; z-index: 30; bottom: 25px; left: 50%; transform: translateX(-50%); background: #242424; color: #fff; padding: 14px 23px; border-radius: 4px; box-shadow: 0 5px 18px #0002; max-width: 90vw; font-size: 16px; text-align: center; }
+dialog { border: 1px solid #b6b6b6; border-radius: 4px; max-width: 540px; width: calc(100% - 32px); padding: 30px; color: #222; box-shadow: 0 10px 60px #0003; }
+dialog::backdrop { background: #0005; }
+dialog h2 { font-size: 27px; margin: 0 28px 22px 0; }
+dialog h3 { font-size: 18px; margin-top: 24px; }
+dialog p { font-size: 16px; line-height: 1.5; color: #555; }
+.dialog-close { position: absolute; top: 10px; right: 12px; font-size: 30px; }
+.help-list { font-size: 15px; line-height: 1.5; padding-left: 22px; }
+.help-list li { margin: 11px 0; }
+.dialog-note { border-top: 1px solid #ddd; padding-top: 17px; font-size: 13px !important; }
+.dialog-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; }
+.library-puzzle { display: flex; align-items: center; gap: 17px; padding: 17px 12px; width: 100%; text-align: left; border: 1px solid #ddd; margin: 10px 0; }
+.library-puzzle:hover, .library-puzzle.current { background: #edf5ff; }
+.mini-preview { width: 50px; height: 50px; flex-shrink: 0; background: #555; border: 1px solid #555; display: grid; grid-template-columns: repeat(var(--size),1fr); gap: 1px; }
+.mini-preview span { background: #fff; }
+.mini-preview span.black { background: #303030; }
+.library-puzzle strong { display: block; font-size: 18px; margin-bottom: 7px; }
+.library-puzzle small { font-size: 12px; color: #777; }
+.library-puzzle > span:last-child { margin-left: auto; }
+.result-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin: 26px 0; }
+.result-stats dt { font-size: 12px; color: #777; }
+.result-stats dd { font-size: 25px; margin: 7px 0; }
+.setting { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 18px 0; border-bottom: 1px solid #ddd; font-size: 16px; }
+.setting input { width: 21px; height: 21px; accent-color: #147eba; }
+.touch-keyboard { display: none; gap: 6px; margin: 15px 0 20px; }
+.key-row { display: flex; justify-content: center; gap: 5px; }
+.key-row button { background: #eceff3; border: 1px solid #d6dbe2; flex: 1; max-width: 55px; min-width: 0; border-radius: 4px; height: 44px; font-size: 16px; touch-action: manipulation; }
+.key-row button:active { background: var(--active); }
+@media (min-width:1600px) {
+  .toolbar { height: 101px; }
+  .message-banner { min-height: 105px; }
+  .other-crosswords { margin-bottom: 48px; }
+  .back-link { margin-top: 6px; margin-bottom: 26px; }
+}
+@media (max-width:1100px) {
+  main { padding: 18px 28px 0; }
+  .toolbar { padding: 0 25px; height: 75px; }
+  .toolbar-left { gap: 29px; }
+  .toolbar-right { gap: 24px; }
+  .message-banner { min-height: 80px; padding: 19px 27px; }
+  .play-area { grid-template-columns: minmax(0,57%) minmax(0,1fr); gap: 13px; padding: 14px 0 0; }
+  .clue-panel { gap: 10px; }
+  .clue-button { font-size: 17px; padding: 5px 4px; gap: 5px; }
+  .clue-number { min-width: 21px; }
+  .clue-panel h2 { font-size: 21px; padding-left: 3px; }
+  .keyboard-hint { font-size: 10px; }
+  .puzzle-credit { font-size: 19px; }
+  .letter { font-size: 3vw; }
+  .grid-footer { font-size: 10px; }
+}
+@media (max-width:760px) {
+  main { padding: 19px 16px 0; }
+  .page-heading h1 { font-size: 42px; letter-spacing: -1px; }
+  .back-link { margin: 12px 0 22px; }
+  .back-link button { font-size: 17px; }
+  .other-crosswords { font-size: 17px; line-height: 1.5; margin-bottom: 24px; }
+  .toolbar { padding: 0 17px; height: 68px; gap: 10px; font-size: 16px; }
+  .toolbar-left { gap: 19px; }
+  .toolbar-right { gap: 19px; }
+  .game-menu summary svg { width: 27px; height: 27px; }
+  .share-button { display: none; }
+  #timer { min-width: 50px; }
+  .message-banner { padding: 18px 21px; font-size: 20px; min-height: 80px; }
+  .play-area { display: block; padding: 14px 0 0; }
+  .board-wrap { max-width: 650px; }
+  .cell-number { font-size: clamp(9px,2vw,14px); top: 2px; left: 2px; }
+  .letter { font-size: clamp(20px,4.6vw,36px); margin-top: 6px; }
+  .puzzle-credit { font-size: 18px; }
+  .grid-footer { font-size: 11px; }
+  .keyboard-hint { display: none; }
+  .touch-keyboard { display: grid; }
+  .clue-panel { gap: 20px; max-height: none; overflow: visible; margin-top: 24px; }
+  .clue-list { overflow: visible; padding-right: 0; }
+  .clue-panel h2 { font-size: 22px; padding-left: 6px; }
+  .clue-button { font-size: 18px; padding: 7px 6px; }
+  .clue-number { min-width: 23px; }
+  .completion { padding: 20px 12px; flex-wrap: wrap; }
+  .completion h2 { font-size: 21px; }
+  footer { font-size: 11px; }
+  .toast { font-size: 14px; }
+}
+@media (max-width:430px) {
+  main { padding: 16px 12px 0; }
+  .page-heading h1 { font-size: 37px; }
+  .toolbar { height: 62px; padding: 0 12px; font-size: 14px; }
+  .toolbar-left { gap: 14px; }
+  .toolbar-right { gap: 12px; }
+  .game-menu summary svg { width: 24px; height: 24px; }
+  .back-link button { font-size: 15px; }
+  .other-crosswords { font-size: 16px; }
+  .message-banner { font-size: 18px; padding: 16px 18px; min-height: 76px; }
+  .letter { font-size: clamp(17px,5vw,22px); margin-top: 6px; }
+  .cell-number { font-size: 9px; top: 1px; }
+  .clue-button { font-size: 16px; padding: 6px 3px; gap: 5px; }
+  .clue-panel { gap: 14px; }
+  .key-row { gap: 4px; }
+  .key-row button { font-size: 14px; height: 42px; }
+  .result-stats { gap: 5px; }
+  .result-stats dt { font-size: 11px; }
+  .result-stats dd { font-size: 22px; }
+  .puzzle-credit { font-size: 16px; }
+  .menu-items { left: -12px; }
+}
+@media (pointer:coarse) and (min-width:761px) {
+  .touch-keyboard { display: grid; }
+  .keyboard-hint { display: none; }
+  .clue-panel { max-height: calc(var(--board-height,800px) + 220px); }
+}
+@media print {
+  @page { margin: 12mm; }
+  main { padding: 0; max-width: none; }
+  .page-heading h1 { font-size: 32px; }
+  .back-link, .other-crosswords, .toolbar, .message-banner, .touch-keyboard, .grid-footer,
+  .keyboard-hint, footer, dialog, .toast, .completion, #pause-overlay { display: none !important; }
+  .play-area { display: grid; grid-template-columns: 55% 1fr; gap: 18px; margin-top: 15px; }
+  .clue-panel { max-height: none; overflow: visible; gap: 15px; }
+  .clue-list { overflow: visible; }
+  .clue-button { font-size: 12px; line-height: 1.3; padding: 2px 0; }
+  .clue-number { min-width: 16px; }
+  .clue-panel h2 { font-size: 16px; padding: 0; }
+  .cell-number { font-size: 9px; }
+  .letter { font-size: 22px; }
+  .cell.in-word, .cell.selected { background: #fff !important; }
+  .cell.black { background: #303030 !important; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .puzzle-credit { font-size: 13px; }
+  .cell { outline: none !important; }
+  .clue-button.active { background: none; }
+  body.large-clues .clue-button { font-size: 12px; }
+}
+@media (prefers-reduced-motion:reduce) { * { scroll-behavior: auto !important; } }

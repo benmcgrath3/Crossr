@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Crossr’s midi crossword with Across and Down clues, saved progress, and keyboard or touch controls.">
+  <title>Midi Crossword — Crossr</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./src/style.css">
+  <script type="module" src="./src/app.js"></script>
+</head>
+<body>
+<main>
+  <header class="page-heading">
+    <h1 id="page-title">Midi Crossword</h1>
+    <div class="back-link"><button id="open-library">&lt;&lt; Back to all Crossr Games</button></div>
+    <p class="other-crosswords">Interested in more Crosswords? Try out our <button data-puzzle="heart-of-the-matter">Mini Crossword</button>, <button data-puzzle="a-good-turn">Quick Crossword</button>, <button data-puzzle="small-wonders">Starter Crossword</button>, or <button id="browse-library">explore the full crossword collection</button>.</p>
+  </header>
+  <section class="workspace" aria-label="Crossword player">
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <details id="game-menu" class="game-menu">
+          <summary aria-label="Puzzle menu"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 7h22M5 16h22M5 25h22"/></svg></summary>
+          <div class="menu-items">
+            <button id="menu-library">Choose a puzzle</button>
+            <button id="pencil" aria-pressed="false">Pencil mode <span class="menu-tick" aria-hidden="true">✓</span></button>
+            <div class="menu-label">Check</div>
+            <button data-action="check-word">Check word</button>
+            <button data-action="check-puzzle">Check puzzle</button>
+            <div class="menu-label">Reveal</div>
+            <button data-action="reveal-letter">Reveal letter</button>
+            <button data-action="reveal-word">Reveal word</button>
+            <button data-action="reveal-puzzle">Reveal puzzle…</button>
+            <button id="reset" class="restart-menu">Restart puzzle…</button>
+          </div>
+        </details>
+        <button id="timer" aria-label="Pause timer"><span id="timer-value">0:00</span><span class="timer-symbol" aria-hidden="true"></span></button>
+        <button id="share" class="share-button" aria-label="Share puzzle"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="17" cy="21" r="15"/><circle cx="17" cy="17" r="5"/><path d="M7 32c1-9 19-9 20 0M30 5v10M25 10h10"/></svg></button>
+      </div>
+      <div class="toolbar-right"><button id="open-result">Result</button><button id="open-help">Info</button><button id="print">Print</button><button id="open-settings">Settings</button></div>
+    </div>
+    <div class="message-banner"><div id="current-clue" aria-live="polite">Remember to share this puzzle with your friends!</div></div>
+    <div class="play-area">
+      <div class="grid-column">
+        <div class="board-wrap">
+          <div id="grid" class="grid" role="group" aria-label="Crossword grid"></div>
+          <div id="pause-overlay" hidden><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M14 10v20M26 10v20"/></svg><h2>Puzzle paused</h2><p>Your time and progress are saved.</p><button id="resume" class="primary-button">Resume puzzle</button></div>
+        </div>
+        <div class="puzzle-credit"><span id="puzzle-title"></span> <em id="puzzle-byline"></em><span class="player-credit">Played with <a href="./">Crossr</a></span></div>
+        <div class="grid-footer"><span id="save-status">Progress saved on this device</span><span id="progress-text"></span></div>
+        <div class="keyboard-hint">Type to enter letters · <kbd>Space</kbd> switch direction · <kbd>Tab</kbd> next clue · <kbd>Esc</kbd> menu</div>
+        <div id="touch-keyboard" class="touch-keyboard" aria-label="Letter keyboard"></div>
+      </div>
+      <div class="clue-panel">
+        <section aria-labelledby="across-title"><h2 id="across-title">ACROSS</h2><ol id="across-clues" class="clue-list"></ol></section>
+        <section aria-labelledby="down-title"><h2 id="down-title">DOWN</h2><ol id="down-clues" class="clue-list"></ol></section>
+      </div>
+    </div>
+    <div id="completion" class="completion" hidden><div><h2>Puzzle complete!</h2><p id="completion-copy"></p></div><button id="next-puzzle" class="primary-button">Choose another puzzle</button></div>
+  </section>
+  <footer>Crossr · Progress is saved on this device.</footer>
+</main>
+<div id="toast" class="toast" role="status" hidden></div>
+<dialog id="help-dialog"><button class="dialog-close" aria-label="Close dialog">×</button><h2>About this crossword</h2><p id="puzzle-info"></p><p id="puzzle-source"></p><h3>How to play</h3><ul class="help-list"><li>Click or tap a square or clue, then enter letters. Click the selected square again to switch direction.</li><li>Arrow keys move around the grid and skip black squares.</li><li>Space or Enter switches Across/Down. Tab and Shift + Tab move between clues.</li><li>Backspace erases. Escape takes you to the puzzle menu.</li><li>Use the menu for pencil mode, checking, revealing, and restarting.</li><li>On a phone or tablet, use the letter keyboard below the grid.</li></ul><p class="dialog-note">Progress is stored in this browser, without an account. It does not sync across devices.</p><button class="primary-button dialog-done">Back to puzzle</button></dialog>
+<dialog id="library-dialog"><button class="dialog-close" aria-label="Close dialog">×</button><h2>Choose a crossword</h2><div id="puzzle-library"></div></dialog>
+<dialog id="confirm-dialog"><h2 id="confirm-title"></h2><p id="confirm-copy"></p><div class="dialog-actions"><button id="confirm-cancel" class="secondary-button">Keep playing</button><button id="confirm-ok" class="primary-button">Continue</button></div></dialog>
+<dialog id="result-dialog"><button class="dialog-close" aria-label="Close dialog">×</button><h2>Your result</h2><p id="result-status"></p><dl class="result-stats"><div><dt>Time</dt><dd id="result-time"></dd></div><div><dt>Squares filled</dt><dd id="result-filled"></dd></div><div><dt>Revealed letters</dt><dd id="result-revealed"></dd></div></dl><p>Use Check in the puzzle menu to review your answers.</p><button class="primary-button dialog-done">Back to puzzle</button></dialog>
+<dialog id="settings-dialog"><button class="dialog-close" aria-label="Close dialog">×</button><h2>Settings</h2><label class="setting"><span>Show timer</span><input id="setting-timer" type="checkbox" checked></label><label class="setting"><span>Highlight active word</span><input id="setting-highlight" type="checkbox" checked></label><label class="setting"><span>Skip filled squares when typing</span><input id="setting-skip" type="checkbox"></label><label class="setting"><span>Larger clue text</span><input id="setting-large" type="checkbox"></label><p class="dialog-note">Your preferences are saved on this device.</p><button class="primary-button dialog-done">Done</button></dialog>
+</body>
+</html>
