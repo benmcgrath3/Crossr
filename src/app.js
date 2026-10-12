@@ -101,10 +101,12 @@ function render() {
     button.classList.toggle('finished', entry.cells.every(i => state.letters[i]));
     button.setAttribute('aria-current', String(selected));
   });
-  if (userInteracted && !completed) {
+  const showClue = userInteracted && !completed;
+  $('.message-banner').hidden = !showClue;
+  if (showClue) {
     const indicator = document.createElement('span'); indicator.className = 'clue-indicator'; indicator.textContent = `${active.number} ${state.direction === 'across' ? 'Across' : 'Down'}`;
     const copy = document.createElement('span'); copy.textContent = active.clue; $('#current-clue').replaceChildren(indicator, copy);
-  } else $('#current-clue').textContent = 'Remember to share this puzzle with your friends!';
+  } else $('#current-clue').replaceChildren();
   const total = puzzle.rows.join('').split('').filter(letter => letter !== '#').length;
   $('#progress-text').textContent = `${state.letters.filter(Boolean).length} / ${total}`;
   $('#timer-value').textContent = formatTime(state.seconds); $('#timer').setAttribute('aria-label', completed ? 'Puzzle completed' : paused ? 'Resume timer' : 'Pause timer');
